@@ -153,6 +153,22 @@ class Central(CovController):
         self.node_descs.add(node_desc)
 
 
+class DistManual(CovController):
+    def start(self):
+        self.cov = coverage.coverage(source=self.cov_source,
+                                     data_suffix=True,
+                                     config_file=self.cov_config)
+        self.cov.start()
+        self.set_env()
+
+    def finish(self):
+        self.unset_env()
+        self.cov.stop()
+        self.cov.save()
+        node_desc = self.get_node_desc(sys.platform, sys.version_info)
+        self.node_descs.add(node_desc)
+
+
 class DistMaster(CovController):
     """Implementation for distributed master."""
 

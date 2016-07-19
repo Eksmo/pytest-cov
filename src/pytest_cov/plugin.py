@@ -139,7 +139,7 @@ class CovPlugin(object):
         if is_dist and start:
             self.start(engine.DistMaster)
         elif start:
-            self.start(engine.Central)
+            self.start(engine.DistManual)
 
         # slave is started in pytest hook
 
@@ -174,7 +174,7 @@ class CovPlugin(object):
                                                    getattr(session, 'nodeid'))
             self.start(engine.DistSlave, session.config, nodeid)
         elif not self._started:
-            self.start(engine.Central)
+            self.start(engine.DistManual)
 
     def pytest_configure_node(self, node):
         """Delegate to our implementation.
